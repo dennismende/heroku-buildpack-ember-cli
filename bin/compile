@@ -153,8 +153,8 @@ else
   ln -s $cache_dir/bower_components $build_dir/bower_components
 fi
 
-status "Pruning cached dependencies not specified in package.json"
-npm prune 2>&1 | indent
+status "Pruning all cached dependencies"
+npm cache clean 2>&1 | indent
 
 if test -e $build_dir/node_modules/bower/bin/bower; then
   status "Bower already exists"
