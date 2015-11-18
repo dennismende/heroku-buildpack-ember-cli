@@ -153,6 +153,9 @@ else
   ln -s $cache_dir/bower_components $build_dir/bower_components
 fi
 
+status "Pruning cached dependencies not specified in package.json"
+npm prune 2>&1 | indent
+
 if test -e $build_dir/node_modules/bower/bin/bower; then
   status "Bower already exists"
 else
@@ -178,9 +181,6 @@ if [ "$GIT_SSH_KEY" != "" ]; then
   # Add github to the list of known hosts - ignore the warning or else set -e will abort the deployment
   ssh -oStrictHostKeyChecking=no -T git@github.com || true
 fi
-
-status "Pruning cached dependencies not specified in package.json"
-npm prune 2>&1 | indent
 
 status "Pruning cached bower dependencies not specified in bower.json"
 bower prune 2>&1 | indent
