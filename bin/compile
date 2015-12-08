@@ -95,6 +95,7 @@ fi
 if [[ -n ${NPM_REGISTRY:-} ]]; then
   status "Set custom npm registry"
   npm config set registry $NPM_REGISTRY
+  npm set registry $NPM_REGISTRY
   npm config list
 fi
 
