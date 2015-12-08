@@ -173,9 +173,6 @@ fi
 status "Pruning all cached dependencies"
 npm cache clean 2>&1 | indent
 
-status "Remove phantomjs"
-npm uninstall --save-dev phantomjs
-
 if test -e $build_dir/node_modules/bower/bin/bower; then
   status "Bower already exists"
 else
