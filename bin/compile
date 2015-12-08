@@ -92,6 +92,13 @@ else
   status "Using default npm version: `npm --version`"
 fi
 
+if [[ -n ${NPM_REGISTRY:-} ]]; then
+  status "Set custom npm registry"
+  npm config set registry $NPM_REGISTRY
+  npm set registry $NPM_REGISTRY
+  npm config list
+fi
+
 status "Downloading and installing nginx"
 if [[ -n ${AWS_MIRROR:-} ]]; then
   nginx_url="${AWS_MIRROR}/devmynd-github/heroku-nginx-1.6.0.tar.gz"
@@ -197,7 +204,12 @@ bower prune 2>&1 | indent
 
 status "Installing dependencies"
 # Make npm output to STDOUT instead of its default STDERR
-npm install --quiet --no-optional --userconfig $build_dir/.npmrc 2>&1 | indent
+if[ -f "$build_dir/.npmrc" ]; then
+  npm install --quiet --no-optional --userconfig $build_dir/.npmrc 2>&1 | indent
+else
+  npm install --quiet --no-optional 2>&1 | indent
+fi
+
 bower install --quiet | indent
 
 # Add the project's and ember-cli's dependencies' binaries to the PATH
