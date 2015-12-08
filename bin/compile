@@ -95,7 +95,7 @@ fi
 if [[ -n ${NPM_REGISTRY:-} ]]; then
   status "Set custom npm registry"
   npm config set registry $NPM_REGISTRY
-  cat ~/.npmrc
+  npm config list
 fi
 
 status "Downloading and installing nginx"
