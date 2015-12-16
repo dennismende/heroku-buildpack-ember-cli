@@ -64,7 +64,7 @@ else
 fi
 
 if [[ -n {NO_PROXY} ]]; then
-  http_proxy= https_proxy = curl $node_url -s -o - | tar xzf - -C $build_dir
+  http_proxy= https_proxy= curl $node_url -s -o - | tar xzf - -C $build_dir
 else
   curl $node_url -s -o - | tar xzf - -C $build_dir
 fi
@@ -112,7 +112,7 @@ else
 fi
 
 if [[ -n {NO_PROXY} ]]; then
-  http_proxy= https_proxy = curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
+  http_proxy= https_proxy= curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
 else
   curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
 fi
