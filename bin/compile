@@ -63,7 +63,7 @@ else
   node_url="http://s3pository.heroku.com/node/v$node_version/node-v$node_version-linux-x64.tar.gz"
 fi
 
-if [[ -n {NO_PROXY} ]]; then
+if [[ -n ${NO_PROXY:-} && -n ${HEROKU_MIRROR:-} ]]; then
   http_proxy= https_proxy= curl $node_url -s -o - | tar xzf - -C $build_dir
 else
   curl $node_url -s -o - | tar xzf - -C $build_dir
@@ -111,7 +111,7 @@ else
   nginx_url=https://s3.amazonaws.com/devmynd-github/heroku-nginx-1.6.0.tar.gz
 fi
 
-if [[ -n {NO_PROXY} ]]; then
+if [[ -n ${NO_PROXY:-} && -n ${HEROKU_MIRROR:-} ]]; then
   http_proxy= https_proxy= curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
 else
   curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
