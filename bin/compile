@@ -57,7 +57,7 @@ fi
 # Download node from Heroku's S3 mirror of nodejs.org/dist
 status "Downloading and installing node"
 if [[ -n ${HEROKU_MIRROR:-} ]]; then
-  node_url="${NODE_MIRROR}/v$node_version/node-v$node_version-linux-x64.tar.gz"
+  node_url="${HEROKU_MIRROR}/v$node_version/node-v$node_version-linux-x64.tar.gz"
 
   if [[ -n ${NO_PROXY:-} ]]; then
     echo 'no_proxy'
