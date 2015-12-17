@@ -59,13 +59,15 @@ status "Downloading and installing node"
 if [[ -n ${HEROKU_MIRROR:-} ]]; then
   node_url="${NODE_MIRROR}/v$node_version/node-v$node_version-linux-x64.tar.gz"
 
+  if [[ -n ${NO_PROXY:-} ]]; then
+    echo 'no_proxy'
+    http_proxy= https_proxy= curl $node_url -s -o - | tar xzf - -C $build_dir
+  else
+    curl $node_url -s -o - | tar xzf - -C $build_dir
+  fi
 else
   node_url="http://s3pository.heroku.com/node/v$node_version/node-v$node_version-linux-x64.tar.gz"
-fi
 
-if [[ -n ${NO_PROXY:-} && -n ${HEROKU_MIRROR:-} ]]; then
-  http_proxy= https_proxy= curl $node_url -s -o - | tar xzf - -C $build_dir
-else
   curl $node_url -s -o - | tar xzf - -C $build_dir
 fi
 
@@ -107,15 +109,19 @@ fi
 status "Downloading and installing nginx"
 if [[ -n ${AWS_MIRROR:-} ]]; then
   nginx_url="${AWS_MIRROR}/devmynd-github/heroku-nginx-1.6.0.tar.gz"
+
+  if [[ -n ${NO_PROXY:-} ]]; then
+    echo 'no_proxy'
+    http_proxy= https_proxy= curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
+  else
+    curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
+  fi
 else
   nginx_url=https://s3.amazonaws.com/devmynd-github/heroku-nginx-1.6.0.tar.gz
-fi
 
-if [[ -n ${NO_PROXY:-} && -n ${AWS_MIRROR:-} ]]; then
-  http_proxy= https_proxy= curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
-else
   curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
 fi
+
 
 status "Adding boot script"
 cp $bp_dir/bin/boot.sh $build_dir
