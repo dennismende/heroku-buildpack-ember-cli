@@ -61,6 +61,7 @@ if [[ -n ${HEROKU_MIRROR:-} ]]; then
 
   if [[ -n ${NO_PROXY:-} ]]; then
     echo 'no_proxy'
+    echo $node_url
     http_proxy= https_proxy= curl $node_url -s -o - | tar xzf - -C $build_dir
   else
     curl $node_url -s -o - | tar xzf - -C $build_dir
