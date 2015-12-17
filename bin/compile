@@ -112,6 +112,7 @@ if [[ -n ${AWS_MIRROR:-} ]]; then
 
   if [[ -n ${NO_PROXY:-} ]]; then
     echo 'no_proxy'
+    curl ${CURL_OPT} $nginx_url
     http_proxy= https_proxy= curl ${CURL_OPT} $nginx_url -o - | tar xzf - -C $build_dir/vendor
   else
     curl ${CURL_OPT} $nginx_url -s -o - | tar xzf - -C $build_dir/vendor
