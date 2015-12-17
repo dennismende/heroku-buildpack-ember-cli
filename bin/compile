@@ -36,6 +36,11 @@ semver_range=$($bp_dir/vendor/jq -r .engines.node $build_dir/package.json)
 # Resolve node version using semver.io
 node_version=$(curl ${CURL_OPT} --silent --get --data-urlencode "range=${semver_range}" https://semver.io/node/resolve)
 
+if [[ -n ${http_proxy:-} ]]; then
+  npm config set proxy $http_proxy
+  npm config set https-proxy $http_proxy
+fi
+
 # Recommend using semver ranges in a safe manner
 if [ "$semver_range" == "null" ]; then
   protip "Specify a node version in package.json"
