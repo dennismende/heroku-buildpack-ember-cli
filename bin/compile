@@ -262,7 +262,7 @@ fi
 
 status "Building Ember CLI application $build_env distribution"
 echo "This is a test"
-$build_dir/node_modules/ember-cli/bin/ember build --environment=production | indent
+$build_dir/node_modules/ember-cli/bin/ember build --environment=production
 
 if test -f $build_dir/hooks/after_hook.sh; then
   status "After hook detected. Running..."
