@@ -188,7 +188,7 @@ else
 fi
 
 status "Pruning all cached dependencies"
-npm cache clean 2>&1 | indent
+npm cache clean --force 2>&1 | indent
 
 if test -e $build_dir/node_modules/bower/bin/bower; then
   status "Bower already exists"
