@@ -230,10 +230,10 @@ status "Installing dependencies"
 # Make npm output to STDOUT instead of its default STDERR
 if [[ -f "$build_dir/.npmrc" ]]; then
   status ".npmrc exists"
-  npm install --quiet --no-optional --userconfig $build_dir/.npmrc 2>&1 | indent
+  npm install --silent --no-optional --userconfig $build_dir/.npmrc 2>&1 | indent
 else
   status "no .npmrc"
-  http_proxy= npm install --quiet --no-optional 2>&1 | indent
+  http_proxy= npm install --silent --no-optional 2>&1 | indent
 fi
 
 bower install --quiet | indent
